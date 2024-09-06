@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="ajt.jpg" rel="shortcut icon" type="image/x-icon">
+    <title>Russian Rap Academy</title>
+    <style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background-image: linear-gradient(315deg, #515BD4 0%, #DD2A7B 74%);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #F2F2F2;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin-top: 50px; /* 상단 여백 추가 */
+    margin-bottom: 50px;
+}
+
+.lyrics-container {
+    margin-top: 20px;
+}
+
+#lyrics {
+    display: none;
+    background-color: #ffffff;
+    padding: 20px; /* 패딩을 넉넉하게 설정 */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+    max-height: 0;
+    overflow: hidden;
+    font-size: 28px; /* 폰트 크기를 더 키움 */
+    line-height: 2.2; /* 줄 간격을 더 넓게 설정 */
+    color: #424A4C; /* 텍스트 색상 */
+}
+
+
+        h1 {
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .ansrn {
+            color: #424A4C;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            background-color: #e5e5e5;
+            color: #585858;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .button:hover {
+            background-color: #cccccc;
+            transform: scale(1.05);
+        }
+
+        .lyrics-container {
+            margin-top: 20px;
+        }
+
+        #lyrics {
+            display: none;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .toggle-lyrics {
+            margin-top: 10px;
+            cursor: pointer;
+            color: #585858;
+            text-decoration: underline;
+        }
+
+         /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 80%;
+                padding: 20px;
+            }
+
+            .button {
+                padding: 10px 20px;
+                font-size: 20px;
+            }
+
+            #lyrics {
+                font-size: 12px;
+                line-height: 1.8;
+                padding: 15px;
+            }
+
+            .toggle-lyrics {
+                font-size: 11px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* 가사 보기 버튼 스타일 */
+.toggle-lyrics {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    background: linear-gradient(45deg, #FF416C, #FF4B2B);
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+.toggle-lyrics:hover {
+    background: linear-gradient(45deg, #FF4B2B, #FF416C);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 가사 컨테이너 스타일 */
+#lyrics {
+    display: none;
+    background: linear-gradient(135deg, #F0F0F0, #C8D6E5);
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+    max-height: 0;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 2.2;
+    color: #333;
+}
+
+/* 애니메이션 적용 */
+#lyrics.show {
+    opacity: 1;
+    max-height: 500px;
+}
+/* 다크 모드 스타일 */
+body.dark-mode {
+    background-image: linear-gradient(315deg, #293093 0%, #a21f5a 74%);
+    color: #E0E0E0;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.container.dark-mode {
+    background-color: #2e2e2e;
+    color: #E0E0E0;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h1.dark-mode {
+    color: #fff;
+}
+
+p.ansrn.dark-mode {
+    color: #ffffff;
+    transition: color 0.5s ease;
+}
+
+/* 페이드 효과 */
+body, .container, h1, p.ansrn {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 다크 모드 아이콘 스타일 */
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+
+}
+
+.dark-mode-toggle img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s;
+}
+
+.dark-mode-toggle img:hover {
+    transform: scale(1.1);
+}
+/* 언어 버튼 스타일 */
+.language-selector {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.language-selector img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.language-selector img:hover {
+    transform: scale(1.1);
+}
+
+/* 언어 선택 버튼 스타일 */
+.language-menu {
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    background: #f9f9f9; /* 구별되는 색상 */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0; /* 초기 상태에서 투명도 0 */
+    transform: translateY(-20px); /* 초기 상태에서 위쪽으로 이동 */
+    z-index: 1000;
+    background-color: #ffffff; /* 배경 색상 설정 */
+}
+
+.language-menu.show {
+    opacity: 1; /* 완전 불투명 */
+    background-color: #f2f2f2;
+    transform: translateY(0); /* 원래 위치로 이동 */
+}
+
+.language-menu.hidden {
+    opacity: 0; /* 투명도 0으로 변경 */
+    transform: translateY(-20px); /* 위쪽으로 이동 */
+}
+
+.language-menu button {
+    background: #e0e0e0; /* 구별되는 색상 */
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.language-menu button:hover {
+    background: #cccccc; /* 구별되는 색상 */
+}
+
+/* 언어 버튼 및 선택 버튼 다크 모드 영향 없음 */
+.language-selector, .language-menu {
+    background: transparent;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <img src="dark-mode-icon.png" alt="Toggle Dark Mode">
+    </div>
+    
+    <div class="container">
+        <h1><b>김규진의 랩학원</b></h1>
+        <p class="ansrn"><b>김규진 미발매곡 유출 - 미래(가제)</b></p>
+
+        <!-- 원본 소리 재생 버튼 -->
+        <button id="playButton" onclick="toggleSound('sergey.WAV', 'playButton')" class="button">
+            <span><b>Original Edition</b></span>
+        </button><br>
+
+        <!-- Enhanced 소리 재생 버튼 -->
+        <button id="enhancedPlayButton" onclick="toggleSound('kyujin (enhanced).mp3', 'enhancedPlayButton')" class="button">
+            <span><b>Remastered Edition</b></span>
+        </button>
+
+        <!-- 가사 숨기기/펼치기 -->
+        <div class="lyrics-container">
+            <div class="toggle-lyrics" onclick="toggleLyrics()">가사 보기</div>
+            <div id="lyrics">
+                <div id ="mirae">
+                    <p class="ansrn"><b>미래는 우리 앞에 펼쳐진 도안이랑 도화지같아</b><br>
+                    <b>꿈을 그려 칠해야지</b><br>
+                    <b>날개를 펼쳐 나의 미래로 나아가</b><br>
+                    <b>미래는 끊임없는 도전의 시간</b><br>
+                    <b>우리는 오려내 만들어낸 기적의 순간</b><br>
+                    <b>저 하늘을 향해 뛰어올라</b><br>
+                    <b>무엇이든 될 수 있어</b><br>
+                    <b>미래는 빛나고있어 나의 손 끝에</b><br>
+                    <b>미래는 우리가 만들어가는 것</b><br>
+                    <b>사람들과 행동이 미래를 좌우해</b><br>
+                    <b>언제나 지혜롭게 나아가야 돼</b><br>
+                    <b>항상 앞으로 포기하지 않고 나아가야 해</b>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+  <!-- 언어 버튼 -->
+<div class="language-selector" onclick="toggleLanguageMenu()">
+    <img src="language-icon.png" alt="Language">
+</div>
+
+<!-- 언어 선택 메뉴 -->
+<div class="language-menu">
+    <button onclick="changeLanguage('ko')">한국어</button>
+    <button onclick="changeLanguage('en')">English</button>
+    <button onclick="changeLanguage('ja')">日本語</button>
+    <button onclick="changeLanguage('de')">Deutsch</button>
+    <button onclick="changeLanguage('ru')">Русский</button>
+    <button onclick="changeLanguage('zh')">中文</button>
+    <button onclick="changeLanguage('fr')">Français</button>
+</div>
+
+
+
+    <script>
+        var audio;
+        var isPlaying = false;
+        var activeButton = null;
+
+        function toggleSound(src, buttonId) {
+    if (audio && isPlaying && activeButton === buttonId) {
+        audio.pause();
+        isPlaying = false;
+        document.getElementById(buttonId).innerHTML = buttonId === 'playButton' 
+            ? '<span><b>Original Edition</b></span>' 
+            : '<span><b>Remastered Edition</b></span>';
+    } else {
+        if (audio) {
+            audio.pause();
+        }
+        audio = new Audio(src);
+        audio.play();
+        isPlaying = true;
+
+        // Reset button states
+        document.getElementById('playButton').innerHTML = '<span><b>Original Edition</b></span>';
+        document.getElementById('enhancedPlayButton').innerHTML = '<span><b>Remastered Edition</b></span>';
+
+        // Set the active button state
+        activeButton = buttonId;
+        document.getElementById(buttonId).innerHTML = '<span><b>Playing...</b></span>';
+    }
+}
+
+
+        function toggleLyrics() {
+            var lyrics = document.getElementById('lyrics');
+            var toggleBtn = document.querySelector('.toggle-lyrics');
+            if (lyrics.style.display === 'none' || lyrics.style.opacity == 0) {
+                lyrics.style.display = 'block';
+                setTimeout(function() {
+                    lyrics.style.opacity = 1;
+                    lyrics.style.maxHeight = '1000px'; // 최대 높이 설정
+                }, 10); // 애니메이션을 위해 작은 딜레이 추가
+                toggleBtn.innerText = '가사 숨기기';
+            } else {
+                lyrics.style.opacity = 0;
+                lyrics.style.maxHeight = '0';
+                setTimeout(function() {
+                    lyrics.style.display = 'none';
+                }, 500); // 애니메이션 완료 후에 display를 none으로 변경
+                toggleBtn.innerText = '가사 보기';
+            }
+        }
+        function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    document.querySelector('.container').classList.toggle('dark-mode');
+    document.querySelector('h1').classList.toggle('dark-mode');
+    document.querySelector('.ansrn').classList.toggle('dark-mode');
+
+    // 현재 모드를 로컬 스토리지에 저장
+    if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+}
+// 언어별 텍스트 설정
+const translations = {
+    ko: "김규진의 랩학원",
+    en: "Russian Rap Academy",
+    jp: "ロシアンラップアカデミー",
+    de: "Russische Rap-Akademie",
+    ru: "Российская Рап Академия",
+    zh: "俄罗斯说唱学院",
+    fr: "AAcadémie de Rap Russe"
+};
+// 언어 선택 메뉴 토글
+function toggleLanguageMenu() {
+    const menu = document.querySelector('.language-menu');
+    if (menu.classList.contains('show')) {
+        menu.classList.remove('show');
+        menu.classList.add('hidden');
+    } else {
+        menu.classList.remove('hidden');
+        menu.classList.add('show');
+    }
+}
+
+
+function changeLanguage(language) {
+    const title = document.querySelector('h1');
+    const subtitle = document.querySelector('.ansrn');
+    const lyricsToggle = document.querySelector('.toggle-lyrics');
+    const pageTitle = document.querySelector('title');
+
+    const translations = {
+        'ko': {
+            title: '김규진의 랩학원',
+            subtitle: '김규진 미발매곡 유출 - 미래(가제)',
+            lyricsToggle: '가사 보기',
+            pageTitle: '김규진의 랩학원'
+        },
+        'en': {
+            title: 'Russian Rap Academy',
+            subtitle: 'Kim Kyujin\'s Unreleased Song Leak - MIRAE (Unofficial Title)',
+            lyricsToggle: 'View Lyrics',
+            pageTitle: 'Russian Rap Academy'
+        },
+        'ja': {
+            title: 'ロシアンラップアカデミー',
+            subtitle: 'キム・キュジンの未発表曲 - フューチャー（仮題)',
+            lyricsToggle: '歌詞を見る',
+            pageTitle: 'ロシアンラップアカデミー'
+        },
+        'de': {
+            title: 'Russische Rap-Akademie',
+            subtitle: 'Kim Kyujin\'s Unveröffentlichtes Lied Leck - MIRAE (Arbeitstitel)',
+            lyricsToggle: 'Liedtexte anzeigen',
+            pageTitle: 'Russische Rap-Akademie'
+        },
+        'ru': {
+            title: 'Российская Рап Академия',
+            subtitle: 'Утечка неизданной песни Ким Кюджина - MIRAE (Рабочее название)',
+            lyricsToggle: 'Посмотреть текст',
+            pageTitle: 'Российская Рап Академия'
+        },
+        'zh': {
+            title: '俄罗斯说唱学院',
+            subtitle: '金奎珍未发行歌曲泄露 - 未来（工作标题）',
+            lyricsToggle: '查看歌词',
+            pageTitle: '俄罗斯说唱学院'
+        },
+        'fr': {
+            title: 'Académie de Rap Russe',
+            subtitle: 'Fuite de la chanson inédite de Kim Kyujin - MIRAE (Titre provisoire)',
+            lyricsToggle: 'Voir les paroles',
+            pageTitle: 'Académie de Rap Russe'
+        }
+    };
+
+    // 선택한 언어로 텍스트 변경
+    title.innerText = translations[language].title;
+    subtitle.innerText = translations[language].subtitle;
+    lyricsToggle.innerText = translations[language].lyricsToggle;
+    document.title = translations[language].pageTitle; // 페이지 제목 업데이트
+
+    // 메뉴 닫기
+    toggleLanguageMenu();
+}
+
+
+    </script>
+</body>
+</html>
